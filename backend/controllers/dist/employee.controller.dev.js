@@ -2,9 +2,103 @@
 
 var employeeModel = require('../models/employee.model');
 
+var perPage = 10;
+
+var getFindConditions = function getFindConditions(q, filterByKey, filterByValue) {
+  var resCondition = {};
+
+  if (!q && !filterByKey && !filterByValue) {
+    return {};
+  }
+
+  var filterObj = null;
+
+  if (filterByKey && filterByValue) {
+    filterObj = filterByKey == 'department' ? {
+      'department': filterByValue
+    } : filterByKey == 'country' ? {
+      'country': filterByValue
+    } : null;
+  }
+
+  if (q) {
+    if (filterObj) {
+      resCondition = {
+        $and: [{
+          $or: [{
+            firstName: {
+              $regex: q,
+              $options: "i"
+            }
+          }, {
+            lastName: {
+              $regex: q,
+              $options: "i"
+            }
+          }, {
+            email: {
+              $regex: q,
+              $options: "i"
+            }
+          }]
+        }, filterObj]
+      };
+    } else {
+      resCondition = {
+        $or: [{
+          firstName: {
+            $regex: q,
+            $options: "i"
+          }
+        }, {
+          lastName: {
+            $regex: q,
+            $options: "i"
+          }
+        }, {
+          email: {
+            $regex: q,
+            $options: "i"
+          }
+        }]
+      };
+    }
+  } else {
+    resCondition = filterObj || {};
+  }
+
+  return resCondition;
+};
+
 var findAllEmployees = function findAllEmployees(req, res, next) {
-  employeeModel.find().populate('department').populate('country').then(function (employees) {
-    return res.json(employees);
+  var page = Math.max(1, req.query.page); // page start at 1
+
+  var q = req.query.q;
+  var filterByKey = req.query.filterByKey;
+  var filterByValue = req.query.filterByValue;
+  employeeModel.find(getFindConditions(q, filterByKey, filterByValue)).populate('department').populate('country').limit(perPage).skip(perPage * (page - 1)).sort({
+    firstName: 'asc'
+  }).then(function _callee(employees) {
+    var result;
+    return regeneratorRuntime.async(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            result = {
+              employees: employees,
+              pagination: {
+                perPage: perPage,
+                page: page
+              }
+            };
+            return _context.abrupt("return", res.json(result));
+
+          case 2:
+          case "end":
+            return _context.stop();
+        }
+      }
+    });
   });
 };
 
