@@ -1,17 +1,23 @@
 import { Seeder } from 'mongoose-data-seed';
 import Department from '../models/department.model';
 
-const data = [
+const mongoose = require('mongoose');
+
+export const departmentData = [
     {
+        _id: mongoose.Types.ObjectId(),
         name: 'Engineering',
     },
     {
+        _id: mongoose.Types.ObjectId(),
         name: 'HR',
     },
     {
+        _id: mongoose.Types.ObjectId(),
         name: 'Sales',
     },
     {
+        _id: mongoose.Types.ObjectId(),
         name: 'Marketing',
     },
 ];
@@ -24,7 +30,7 @@ class DepartmentsSeeder extends Seeder {
     }
 
     async run() {
-        return Department.create(data);
+        return Department.create(departmentData);
     }
 }
 

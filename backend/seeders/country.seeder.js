@@ -1,17 +1,23 @@
 import { Seeder } from 'mongoose-data-seed';
 import Country from '../models/country.model';
 
-const data = [
+const mongoose = require('mongoose');
+
+export const countryData = [
     {
+        _id: mongoose.Types.ObjectId(),
         name: 'US',
     },
     {
+        _id: mongoose.Types.ObjectId(),
         name: 'Germany',
     },
     {
+        _id: mongoose.Types.ObjectId(),
         name: 'France',
     },
     {
+        _id: mongoose.Types.ObjectId(),
         name: 'Lebanon',
     },
 ];
@@ -24,7 +30,7 @@ class CountriesSeeder extends Seeder {
     }
 
     async run() {
-        return Country.create(data);
+        return Country.create(countryData);
     }
 }
 

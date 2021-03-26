@@ -1,5 +1,6 @@
 import CountriesSeeder from './seeders/country.seeder'
 import DepartmentsSeeder  from './seeders/department.seeder'
+import EmployeesSeeder  from './seeders/employee.seeder'
 
 const mongoose = require('mongoose');
 const properties = require('./config/properties');
@@ -12,7 +13,8 @@ const mongoURL = properties.DB;
  */
 export const seedersList = {
   CountriesSeeder,
-  DepartmentsSeeder
+  DepartmentsSeeder,
+  EmployeesSeeder
 };
 /**
  * Connect to mongodb implementation

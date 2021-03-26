@@ -1,3 +1,5 @@
+var multer = require('multer')
+
 const employeeModel = require('../models/employee.model')
 const perPage = 10;
 
@@ -69,6 +71,32 @@ const findAllEmployees = (req, res, next) => {
         });
 };
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + file.originalname);
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, true);
+    }
+}
+
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+})
+
+
 const findEmployeesById = (req, res, next) => {
     employeeModel.findById(req.params['id'])
         .then(emp => res.json(emp))
@@ -88,10 +116,22 @@ const updateEmployee = (req, res, next) => employeeModel.updateOne({ _id: req.pa
     .then(emp => res.json(emp))
     .catch(err => res.json({ message: 'error occured', error: err }));
 
+const uploadPhoto = (req, res) => {
+    upload(req, res, () => {
+        return employeeModel.updateOne({ _id: req.params['id'] }, {
+            profileImageName: req.body.imageName,
+            profileImageData: req.file.path
+        })
+            .then(res => res.json(res))
+            .catch(err => res.json({ message: 'error occured', error: err }));
+    });
+}
+
 module.exports = {
     findAllEmployees,
     findEmployeesById,
     deleteEmployeeById,
     addNewEmployee,
-    updateEmployee
+    updateEmployee,
+    uploadPhoto
 }

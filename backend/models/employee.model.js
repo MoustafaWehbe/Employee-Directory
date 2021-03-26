@@ -9,9 +9,10 @@ const employeeSchema = new Schema({
     website: { type: String, required: true },
     phone: { type: String, required: true },
     address: { type: String, required: true },
+    profileImageName: { type: String },
+    profileImageData: { type: String },
     department: { type: Schema.Types.ObjectId, ref: 'Department', required: true },
     country: { type: Schema.Types.ObjectId, ref: 'Country', required: true },
-    imgUrl: { type: String, required: true },
     birthDate: { type: Date, required: true }
 }, {
     timestamps: true

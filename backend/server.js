@@ -44,6 +44,7 @@ app.use(function (req, res, next) {
 
 // use express router
 app.use('/api/v1', router);
+app.use('uploads', express.static('uploads'));
 //call heros routing
 emplyeesRoutes(router);
 countriesRoutes(router);

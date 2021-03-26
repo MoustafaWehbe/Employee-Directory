@@ -1,5 +1,7 @@
 "use strict";
 
+var multer = require('multer');
+
 var employeeModel = require('../models/employee.model');
 
 var perPage = 10;
@@ -102,6 +104,31 @@ var findAllEmployees = function findAllEmployees(req, res, next) {
   });
 };
 
+var storage = multer.diskStorage({
+  destination: function destination(req, file, cb) {
+    cb(null, '../uploads/');
+  },
+  filename: function filename(req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  }
+});
+
+var fileFilter = function fileFilter(req, file, cb) {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, true);
+  }
+};
+
+var upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+});
+
 var findEmployeesById = function findEmployeesById(req, res, next) {
   employeeModel.findById(req.params['id']).then(function (emp) {
     return res.json(emp);
@@ -152,10 +179,29 @@ var updateEmployee = function updateEmployee(req, res, next) {
   });
 };
 
+var uploadPhoto = function uploadPhoto(req, res) {
+  upload(req, res, function () {
+    return employeeModel.updateOne({
+      _id: req.params['id']
+    }, {
+      profileImageName: req.body.imageName,
+      profileImageData: req.file.path
+    }).then(function (res) {
+      return res.json(res);
+    })["catch"](function (err) {
+      return res.json({
+        message: 'error occured',
+        error: err
+      });
+    });
+  });
+};
+
 module.exports = {
   findAllEmployees: findAllEmployees,
   findEmployeesById: findEmployeesById,
   deleteEmployeeById: deleteEmployeeById,
   addNewEmployee: addNewEmployee,
-  updateEmployee: updateEmployee
+  updateEmployee: updateEmployee,
+  uploadPhoto: uploadPhoto
 };
