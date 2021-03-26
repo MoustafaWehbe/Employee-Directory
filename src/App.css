@@ -1,0 +1,9 @@
+body {
+}
+
+.background-container {
+  scroll-behavior: smooth;
+  min-height: 100vh;
+  height: fit-content;
+}
+
