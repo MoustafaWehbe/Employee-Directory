@@ -81,21 +81,30 @@ var findAllEmployees = function findAllEmployees(req, res, next) {
   employeeModel.find(getFindConditions(q, filterByKey, filterByValue)).populate('department').populate('country').limit(perPage).skip(perPage * (page - 1)).sort({
     firstName: 'asc'
   }).then(function _callee(employees) {
-    var result;
     return regeneratorRuntime.async(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            result = {
-              employees: employees,
-              pagination: {
-                perPage: perPage,
-                page: page
+            employeeModel.countDocuments(getFindConditions(q, filterByKey, filterByValue)).exec(function (err, count) {
+              if (err) {
+                return res.json({
+                  message: 'error occured',
+                  error: err
+                });
               }
-            };
-            return _context.abrupt("return", res.json(result));
 
-          case 2:
+              var result = {
+                employees: employees,
+                total: count,
+                pagination: {
+                  perPage: perPage,
+                  page: page
+                }
+              };
+              return res.json(result);
+            });
+
+          case 1:
           case "end":
             return _context.stop();
         }

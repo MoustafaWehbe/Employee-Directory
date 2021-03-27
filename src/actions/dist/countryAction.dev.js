@@ -3,17 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getEmployees = void 0;
-
-var _axios = _interopRequireDefault(require("axios"));
+exports.getCountries = void 0;
 
 var _actionTypes = require("./actionTypes");
 
 var _EmployeeApi = require("../utils/EmployeeApi");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-var getEmployees = function getEmployees(page, q, filterByValue, filterByKey) {
+var getCountries = function getCountries() {
   return function _callee(dispatch) {
     var result;
     return regeneratorRuntime.async(function _callee$(_context) {
@@ -22,12 +18,12 @@ var getEmployees = function getEmployees(page, q, filterByValue, filterByKey) {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return regeneratorRuntime.awrap((0, _EmployeeApi.getAllEmployees)(page, q, filterByValue, filterByKey));
+            return regeneratorRuntime.awrap((0, _EmployeeApi.getAllCountries)());
 
           case 3:
             result = _context.sent;
             dispatch({
-              type: _actionTypes.GET_EMPLOYEES_SUCCESS,
+              type: _actionTypes.GET_COUNTRIES_SUCCESS,
               payload: result.data
             });
             _context.next = 10;
@@ -37,7 +33,7 @@ var getEmployees = function getEmployees(page, q, filterByValue, filterByKey) {
             _context.prev = 7;
             _context.t0 = _context["catch"](0);
             dispatch({
-              type: _actionTypes.GET_EMPLOYEES_ERROR,
+              type: _actionTypes.GET_COUNTRIES_ERROR,
               error: _context.t0
             });
 
@@ -50,4 +46,4 @@ var getEmployees = function getEmployees(page, q, filterByValue, filterByKey) {
   };
 };
 
-exports.getEmployees = getEmployees;
+exports.getCountries = getCountries;

@@ -6,7 +6,7 @@ const EmployeeCard = ({
 }) => {
     return (
         <div className="front">
-            <img src={employee.coverImage} alt="coverImage" />
+            <img width="100%" src={employee.profileImageData} alt="profilePicture" />
             <div className="card-footer">
                 <h4> {employee.firstName + ' ' + employee.lastName}  </h4>
                 <p>

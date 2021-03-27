@@ -60,14 +60,21 @@ const findAllEmployees = (req, res, next) => {
             firstName: 'asc'
         })
         .then(async (employees) => {
-            let result = {
-                employees,
-                pagination: {
-                    perPage,
-                    page
-                }
-            }
-            return res.json(result)
+            employeeModel.countDocuments(getFindConditions(q, filterByKey, filterByValue))
+                .exec((err, count) => {
+                    if (err) {
+                        return res.json({ message: 'error occured', error: err });
+                    }
+                    let result = {
+                        employees,
+                        total: count,
+                        pagination: {
+                            perPage,
+                            page
+                        }
+                    }
+                    return res.json(result)
+                })
         });
 };
 

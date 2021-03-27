@@ -10,8 +10,27 @@ const config = {
 //     'Content-Type': 'multipart/form-data',
 // }
 
-export const getAllEmployees = () => {
-    return axios.get(`${api}/employee`, config)
+export const getAllEmployees = (page, q, filterByValue, filterByKey) => {
+    let paramsText = "";
+    let params = [];
+    if (page) {
+        params.push("page=" + page);
+    }
+    else {
+        params.push("page=" + 1);
+    }
+    if (q) {
+        params.push("q=" + q);
+    }
+    if (filterByValue) {
+        params.push("filterByValue=" + filterByValue);
+    }
+    if (filterByKey) {
+        params.push("filterByKey=" + filterByKey);
+    }
+    paramsText = "?" + params.join("&");
+
+    return axios.get(`${api}/employee${paramsText}`, config)
 }
 
 export const deleteContact = (empId) => {
@@ -26,11 +45,11 @@ export const createEmployee = (emp) => {
     return axios.post(`${api}/employee`, emp, config)
 }
 
-export const getDepartments = () => {
+export const getAllDepartments = () => {
     return axios.get(`${api}/department`, config)
 }
 
-export const getCountries = () => {
+export const getAllCountries = () => {
     return axios.get(`${api}/country`, config)
 }
 

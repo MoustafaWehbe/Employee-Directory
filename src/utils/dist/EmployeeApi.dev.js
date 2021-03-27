@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getCountries = exports.getDepartments = exports.createEmployee = exports.updateEmployee = exports.deleteContact = exports.getAllEmployees = void 0;
+exports.getAllCountries = exports.getAllDepartments = exports.createEmployee = exports.updateEmployee = exports.deleteContact = exports.getAllEmployees = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -16,8 +16,30 @@ var config = {
 //     'Content-Type': 'multipart/form-data',
 // }
 
-var getAllEmployees = function getAllEmployees() {
-  return _axios["default"].get("".concat(api, "/employee"), config);
+var getAllEmployees = function getAllEmployees(page, q, filterByValue, filterByKey) {
+  var paramsText = "";
+  var params = [];
+
+  if (page) {
+    params.push("page=" + page);
+  } else {
+    params.push("page=" + 1);
+  }
+
+  if (q) {
+    params.push("q=" + q);
+  }
+
+  if (filterByValue) {
+    params.push("filterByValue=" + filterByValue);
+  }
+
+  if (filterByKey) {
+    params.push("filterByKey=" + filterByKey);
+  }
+
+  paramsText = "?" + params.join("&");
+  return _axios["default"].get("".concat(api, "/employee").concat(paramsText), config);
 };
 
 exports.getAllEmployees = getAllEmployees;
@@ -40,13 +62,13 @@ var createEmployee = function createEmployee(emp) {
 
 exports.createEmployee = createEmployee;
 
-var getDepartments = function getDepartments() {
+var getAllDepartments = function getAllDepartments() {
   return _axios["default"].get("".concat(api, "/department"), config);
 };
 
-exports.getDepartments = getDepartments;
+exports.getAllDepartments = getAllDepartments;
 
-var getCountries = function getCountries() {
+var getAllCountries = function getAllCountries() {
   return _axios["default"].get("".concat(api, "/country"), config);
 }; // export const upload = (data, id) => {
 //     console.log(data);
@@ -54,4 +76,4 @@ var getCountries = function getCountries() {
 // }
 
 
-exports.getCountries = getCountries;
+exports.getAllCountries = getAllCountries;

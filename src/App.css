@@ -7,3 +7,6 @@ body {
   height: fit-content;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
