@@ -1,8 +1,15 @@
-import { GET_EMPLOYEES_SUCCESS, GET_EMPLOYEES_ERROR } from "../actions/actionTypes.js";
+import {
+    GET_EMPLOYEES_SUCCESS,
+    GET_EMPLOYEES_ERROR,
+    ADD_EMPLOYEE_ERROR,
+    CLEAR_ADD_RESPONSE,
+    ADD_EMPLOYEE_SUCCESS
+} from "../actions/actionTypes.js";
 
 const initialState = {
     employees: [],
     employee: {},
+    addResponse: null,
     error: null,
 };
 
@@ -19,6 +26,22 @@ export default function (state = initialState, action) {
                 ...state,
                 error: action.error,
             };
+        case ADD_EMPLOYEE_SUCCESS:
+            return {
+                ...state,
+                employee: action.payload,
+            };
+
+        case ADD_EMPLOYEE_ERROR:
+            return {
+                ...state,
+                error: action.error,
+            };
+        case CLEAR_ADD_RESPONSE:
+            return {
+                ...state,
+                employee: {}
+            }
 
         default:
             return state;

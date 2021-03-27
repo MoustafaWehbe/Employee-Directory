@@ -10,3 +10,20 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.inline-block {
+  display: inline-block;
+}
+
+.margin-left-7{
+  margin-left: 7px;
+}
+
+.red {
+  color: red;
+}
+
+.green-bold {
+  font-weight: bold;
+  color: green!important;
+}

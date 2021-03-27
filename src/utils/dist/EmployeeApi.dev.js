@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getAllCountries = exports.getAllDepartments = exports.createEmployee = exports.updateEmployee = exports.deleteContact = exports.getAllEmployees = void 0;
+exports.uploadPicture = exports.getAllCountries = exports.getAllDepartments = exports.createEmployee = exports.updateEmployee = exports.deleteEmployee = exports.getAllEmployees = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -12,9 +12,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var api = process.env.API_URL || 'http://localhost:4000/api/v1';
 var config = {
   'Content-Type': 'application/json'
-}; // var config2 = {
-//     'Content-Type': 'multipart/form-data',
-// }
+};
+var config2 = {
+  'Content-Type': 'multipart/form-data'
+};
 
 var getAllEmployees = function getAllEmployees(page, q, filterByValue, filterByKey) {
   var paramsText = "";
@@ -44,14 +45,14 @@ var getAllEmployees = function getAllEmployees(page, q, filterByValue, filterByK
 
 exports.getAllEmployees = getAllEmployees;
 
-var deleteContact = function deleteContact(empId) {
+var deleteEmployee = function deleteEmployee(empId) {
   return _axios["default"]["delete"]("".concat(api, "/employee/").concat(empId), config);
 };
 
-exports.deleteContact = deleteContact;
+exports.deleteEmployee = deleteEmployee;
 
 var updateEmployee = function updateEmployee(emp) {
-  return _axios["default"].post("".concat(api, "/employee"), emp, config);
+  return _axios["default"].put("".concat(api, "/employee/").concat(emp._id), emp, config);
 };
 
 exports.updateEmployee = updateEmployee;
@@ -70,10 +71,12 @@ exports.getAllDepartments = getAllDepartments;
 
 var getAllCountries = function getAllCountries() {
   return _axios["default"].get("".concat(api, "/country"), config);
-}; // export const upload = (data, id) => {
-//     console.log(data);
-//     return axios.post(`${api}/upload/${id}`, data, config2);
-// }
-
+};
 
 exports.getAllCountries = getAllCountries;
+
+var uploadPicture = function uploadPicture(empId, data) {
+  return _axios["default"].post("".concat(api, "/employee/photo/").concat(empId), data, config2);
+};
+
+exports.uploadPicture = uploadPicture;

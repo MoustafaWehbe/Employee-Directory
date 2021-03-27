@@ -16,6 +16,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var initialState = {
   employees: [],
   employee: {},
+  addResponse: null,
   error: null
 };
 
@@ -32,6 +33,21 @@ function _default() {
     case _actionTypes.GET_EMPLOYEES_ERROR:
       return _objectSpread({}, state, {
         error: action.error
+      });
+
+    case _actionTypes.ADD_EMPLOYEE_SUCCESS:
+      return _objectSpread({}, state, {
+        employee: action.payload
+      });
+
+    case _actionTypes.ADD_EMPLOYEE_ERROR:
+      return _objectSpread({}, state, {
+        error: action.error
+      });
+
+    case _actionTypes.CLEAR_ADD_RESPONSE:
+      return _objectSpread({}, state, {
+        employee: {}
       });
 
     default:

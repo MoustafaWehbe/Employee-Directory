@@ -124,7 +124,7 @@ const updateEmployee = (req, res, next) => employeeModel.updateOne({ _id: req.pa
     .catch(err => res.json({ message: 'error occured', error: err }));
 
 const uploadPhoto = (req, res) => {
-    upload(req, res, () => {
+    upload.single('fdsf')(req, res, () => {
         return employeeModel.updateOne({ _id: req.params['id'] }, {
             profileImageName: req.body.imageName,
             profileImageData: req.file.path

@@ -3,15 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getEmployees = void 0;
-
-var _axios = _interopRequireDefault(require("axios"));
+exports.ClearAddResponse = exports.UploadPicture = exports.DeleteEmployee = exports.UpdateEmployee = exports.addEmployee = exports.getEmployees = void 0;
 
 var _actionTypes = require("./actionTypes");
 
 var _EmployeeApi = require("../utils/EmployeeApi");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var getEmployees = function getEmployees(page, q, filterByValue, filterByKey) {
   return function _callee(dispatch) {
@@ -51,3 +47,170 @@ var getEmployees = function getEmployees(page, q, filterByValue, filterByKey) {
 };
 
 exports.getEmployees = getEmployees;
+
+var addEmployee = function addEmployee(emp) {
+  return function _callee2(dispatch) {
+    var result;
+    return regeneratorRuntime.async(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return regeneratorRuntime.awrap((0, _EmployeeApi.createEmployee)(emp));
+
+          case 3:
+            result = _context2.sent;
+            dispatch({
+              type: _actionTypes.ADD_EMPLOYEE_SUCCESS,
+              payload: result.data
+            });
+            _context2.next = 10;
+            break;
+
+          case 7:
+            _context2.prev = 7;
+            _context2.t0 = _context2["catch"](0);
+            dispatch({
+              type: _actionTypes.ADD_EMPLOYEE_ERROR,
+              error: _context2.t0
+            });
+
+          case 10:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, null, [[0, 7]]);
+  };
+};
+
+exports.addEmployee = addEmployee;
+
+var UpdateEmployee = function UpdateEmployee(emp) {
+  return function _callee3(dispatch) {
+    var result;
+    return regeneratorRuntime.async(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            _context3.next = 3;
+            return regeneratorRuntime.awrap((0, _EmployeeApi.updateEmployee)(emp));
+
+          case 3:
+            result = _context3.sent;
+            dispatch({
+              type: _actionTypes.UPDATE_EMPLOYEE_SUCCESS,
+              payload: result.data
+            });
+            _context3.next = 10;
+            break;
+
+          case 7:
+            _context3.prev = 7;
+            _context3.t0 = _context3["catch"](0);
+            dispatch({
+              type: _actionTypes.UPDATE_EMPLOYEE_ERROR,
+              error: _context3.t0
+            });
+
+          case 10:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, null, null, [[0, 7]]);
+  };
+};
+
+exports.UpdateEmployee = UpdateEmployee;
+
+var DeleteEmployee = function DeleteEmployee(empId) {
+  return function _callee4(dispatch) {
+    var result;
+    return regeneratorRuntime.async(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            _context4.next = 3;
+            return regeneratorRuntime.awrap((0, _EmployeeApi.deleteEmployee)(empId));
+
+          case 3:
+            result = _context4.sent;
+            dispatch({
+              type: _actionTypes.DELETE_EMPLOYEE_SUCCESS,
+              payload: result.data
+            });
+            _context4.next = 10;
+            break;
+
+          case 7:
+            _context4.prev = 7;
+            _context4.t0 = _context4["catch"](0);
+            dispatch({
+              type: _actionTypes.DELETE_EMPLOYEE_ERROR,
+              error: _context4.t0
+            });
+
+          case 10:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, null, null, [[0, 7]]);
+  };
+};
+
+exports.DeleteEmployee = DeleteEmployee;
+
+var UploadPicture = function UploadPicture(empId, data) {
+  return function _callee5(dispatch) {
+    var result;
+    return regeneratorRuntime.async(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.prev = 0;
+            _context5.next = 3;
+            return regeneratorRuntime.awrap((0, _EmployeeApi.uploadPicture)(empId, data));
+
+          case 3:
+            result = _context5.sent;
+            dispatch({
+              type: _actionTypes.UPLOAD_EMPLOYEE_PICTURE_SUCCESS,
+              payload: result.data
+            });
+            _context5.next = 10;
+            break;
+
+          case 7:
+            _context5.prev = 7;
+            _context5.t0 = _context5["catch"](0);
+            dispatch({
+              type: _actionTypes.UPLOAD_EMPLOYEE_PICTURE_ERROR,
+              error: _context5.t0
+            });
+
+          case 10:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, null, null, [[0, 7]]);
+  };
+};
+
+exports.UploadPicture = UploadPicture;
+
+var ClearAddResponse = function ClearAddResponse() {
+  return function (dispatch) {
+    dispatch({
+      type: _actionTypes.CLEAR_ADD_RESPONSE,
+      payload: null
+    });
+  };
+};
+
+exports.ClearAddResponse = ClearAddResponse;

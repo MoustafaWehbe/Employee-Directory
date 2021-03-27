@@ -6,9 +6,9 @@ const config = {
     'Content-Type': 'application/json',
 };
 
-// var config2 = {
-//     'Content-Type': 'multipart/form-data',
-// }
+var config2 = {
+    'Content-Type': 'multipart/form-data',
+}
 
 export const getAllEmployees = (page, q, filterByValue, filterByKey) => {
     let paramsText = "";
@@ -33,12 +33,12 @@ export const getAllEmployees = (page, q, filterByValue, filterByKey) => {
     return axios.get(`${api}/employee${paramsText}`, config)
 }
 
-export const deleteContact = (empId) => {
+export const deleteEmployee = (empId) => {
     return axios.delete(`${api}/employee/${empId}`, config)
 }
 
 export const updateEmployee = (emp) => {
-    return axios.post(`${api}/employee`, emp, config);
+    return axios.put(`${api}/employee/${emp._id}`, emp, config);
 }
 
 export const createEmployee = (emp) => {
@@ -53,7 +53,6 @@ export const getAllCountries = () => {
     return axios.get(`${api}/country`, config)
 }
 
-// export const upload = (data, id) => {
-//     console.log(data);
-//     return axios.post(`${api}/upload/${id}`, data, config2);
-// }
+export const uploadPicture = (empId, data) => {
+    return axios.post(`${api}/employee/photo/${empId}`, data, config2)
+}

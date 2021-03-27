@@ -189,7 +189,7 @@ var updateEmployee = function updateEmployee(req, res, next) {
 };
 
 var uploadPhoto = function uploadPhoto(req, res) {
-  upload(req, res, function () {
+  upload.single('fdsf')(req, res, function () {
     return employeeModel.updateOne({
       _id: req.params['id']
     }, {

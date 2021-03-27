@@ -8,6 +8,8 @@ import Pagination from 'react-bootstrap/Pagination';
 import ListGroup from 'react-bootstrap/ListGroup';
 import DepartmentSelectModal from '../modals/department-select-modal';
 import CountrySelectModal from '../modals/country-select-modal';
+import EmployeeAddModal from '../modals/employee-add-modal';
+import Button from "react-bootstrap/Button";
 
 import './style.css';
 
@@ -20,7 +22,9 @@ class Employees extends Component {
     filterByKey: "",
     filterByValue: "",
     showDepartmentModal: false,
-    showCountryModal: false
+    showCountryModal: false,
+    showEmployeeAddModal: false,
+    employee: null
   };
 
   constructor(props) {
@@ -106,6 +110,24 @@ class Employees extends Component {
     this.setState({ showCountryModal: false });
   }
 
+  onEmployeeAddClick() {
+    this.setState({ showEmployeeAddModal: true });
+  }
+
+  onAddModalCancel(shouldReload = false) {
+    this.setState({ showEmployeeAddModal: false, employee: null }, () => {
+      shouldReload ? this.reloadEmployees() : void 0;
+    });
+  }
+
+  onEmployeeAdd() {
+    this.setState({ showEmployeeAddModal: false });
+  }
+
+  onEmployeeClick(emp) {
+    this.setState({ employee: emp }, () => { this.onEmployeeAddClick() });
+  }
+
   render() {
     const {
       currentPage,
@@ -145,6 +167,12 @@ class Employees extends Component {
       <div className="background-container">
         <div className="mx-5 py-5">
           <div className="row">
+            <div className="offset-10 col-lg-2 col-sm-12">
+              <Button variant="primary"
+                onClick={() => this.onEmployeeAddClick()}>Add Employee</Button>{' '}
+            </div>
+          </div>
+          <div className="row">
             <div className="col-lg-2 col-sm-12">
               <ListGroup as="ul">
                 <ListGroup.Item as="li" active>
@@ -154,8 +182,11 @@ class Employees extends Component {
                   onClick={() => this.handleFilterClick('department')}>Filter by department</ListGroup.Item>
                 <ListGroup.Item className="cursor-pointer" as="li"
                   onClick={() => this.handleFilterClick('country')}>Filter by country</ListGroup.Item>
-                <ListGroup.Item className="cursor-pointer clear-filter" as="li"
-                  onClick={() => this.handleclearFiltersClick()}>Clear filters</ListGroup.Item>
+                {
+                  this.state.filterByKey || this.state.filterByValue ?
+                    <ListGroup.Item className="cursor-pointer clear-filter" as="li"
+                      onClick={() => this.handleclearFiltersClick()}>Clear filters</ListGroup.Item> : null
+                }
               </ListGroup>
             </div>
 
@@ -172,9 +203,20 @@ class Employees extends Component {
                 {!!filteredEmployees.length ? `${filteredEmployees.length} ` : "0"}
                  employees found.
                </p>
+              {
+                this.state.filterByKey && this.state.filterByValue ?
+                  (<p className="text-left text-muted green-bold">
+                    {this.state.filterByKey + ' filter is applied on Employees list'}
+                  </p>)
+                  : null
+              }
 
+              {
+                paginationBasic
+              }
               {!!filteredEmployees ? (
                 <EmployeeList
+                  onEmployeeClick={(emp) => this.onEmployeeClick(emp)}
                   employees={filteredEmployees}
                 />
               ) : (
@@ -198,6 +240,12 @@ class Employees extends Component {
             <CountrySelectModal
               onCounModalCancel={() => this.onCounModalCancel()}
               onCounSelected={(id) => this.onCounSelected(id)} /> : null}
+        </div>
+        <div>
+          {this.state['showEmployeeAddModal'] ?
+            <EmployeeAddModal
+              employee={this.state.employee}
+              onAddModalCancel={(shouldReload) => this.onAddModalCancel(shouldReload)} /> : null}
         </div>
       </div>
     );

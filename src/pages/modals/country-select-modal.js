@@ -12,7 +12,8 @@ import { getCountries } from "../../actions/countryAction";
 class CountrySelectModal extends Component {
     state = {
         countries: [],
-        selectedCounId: ''
+        selectedCounId: '',
+        selectedCounName: ''
     };
 
     constructor(props) {
@@ -27,8 +28,8 @@ class CountrySelectModal extends Component {
         this.props.dispatch(getCountries())
     }
 
-    handleDropdownItemCLick(counId) {
-        this.setState({ selectedCounId: counId });
+    handleDropdownItemCLick(counId, name) {
+        this.setState({ selectedCounId: counId, selectedCounName: name });
     }
 
     onCounModalCancel() {
@@ -53,7 +54,7 @@ class CountrySelectModal extends Component {
         let counItems = [];
         for (let i = 0; countries && i < countries.length; i++) {
             counItems.push(
-                <Dropdown.Item key={i} onClick={() => this.handleDropdownItemCLick(countries[i]._id)}>
+                <Dropdown.Item key={i} onClick={() => this.handleDropdownItemCLick(countries[i]._id, countries[i].name)}>
                     {countries[i].name}
                 </Dropdown.Item>
             );
@@ -69,7 +70,7 @@ class CountrySelectModal extends Component {
                 <Modal.Body>
                     <Dropdown>
                         <Dropdown.Toggle id="dropdown-custom-components">
-                            Select Country
+                            {this.state.selectedCounName || 'Select Country'}
                         </Dropdown.Toggle>
                         {counItemsDropDown}
                     </Dropdown>

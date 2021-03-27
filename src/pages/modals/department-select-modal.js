@@ -12,7 +12,8 @@ import { getDepartments } from "../../actions/departmentAction";
 class DepartmentSelectModal extends Component {
     state = {
         departments: [],
-        selectedDepId: ''
+        selectedDepId: '',
+        selectedDepName: ''
     };
 
     constructor(props) {
@@ -27,8 +28,8 @@ class DepartmentSelectModal extends Component {
         this.props.dispatch(getDepartments())
     }
 
-    handleDropdownItemCLick(depId) {
-        this.setState({ selectedDepId: depId });
+    handleDropdownItemCLick(depId, name) {
+        this.setState({ selectedDepId: depId, selectedDepName: name });
     }
 
     onDepModalCancel() {
@@ -53,7 +54,7 @@ class DepartmentSelectModal extends Component {
         let depItems = [];
         for (let i = 0; departments && i < departments.length; i++) {
             depItems.push(
-                <Dropdown.Item key={i} onClick={() => this.handleDropdownItemCLick(departments[i]._id)}>
+                <Dropdown.Item key={i} onClick={() => this.handleDropdownItemCLick(departments[i]._id, departments[i].name)}>
                     {departments[i].name}
                 </Dropdown.Item>
             );
@@ -69,7 +70,7 @@ class DepartmentSelectModal extends Component {
                 <Modal.Body>
                     <Dropdown>
                         <Dropdown.Toggle id="dropdown-custom-components">
-                            Select Department
+                            {this.state.selectedDepName || 'Select Department'}
                         </Dropdown.Toggle>
                         {depItemsDropDown}
                     </Dropdown>
