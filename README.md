@@ -21,6 +21,10 @@
         npm start
     - apis found at localhost:4000/api/v1/, for example to get all employees: localhost:4000/api/v1/employee?page=1
 
+**Run both the frontend and the backend:**
+
+    - from the root directory run: "npm run dev": this command will run both both the front and the backend concurently. Nodemon is used to run the server to allow smooth dev and instant reload.
+
 **Database:**
 
     - data seed: 
