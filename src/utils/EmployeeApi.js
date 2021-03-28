@@ -37,12 +37,12 @@ export const deleteEmployee = (empId) => {
     return axios.delete(`${api}/employee/${empId}`, config)
 }
 
-export const updateEmployee = (emp) => {
-    return axios.put(`${api}/employee/${emp._id}`, emp, config);
+export const updateEmployee = (emp, emp_id) => {
+    return axios.put(`${api}/employee/${emp_id}`, emp, config2);
 }
 
 export const createEmployee = (emp) => {
-    return axios.post(`${api}/employee`, emp, config)
+    return axios.post(`${api}/employee`, emp, config2)
 }
 
 export const getAllDepartments = () => {
@@ -53,6 +53,3 @@ export const getAllCountries = () => {
     return axios.get(`${api}/country`, config)
 }
 
-export const uploadPicture = (empId, data) => {
-    return axios.post(`${api}/employee/photo/${empId}`, data, config2)
-}

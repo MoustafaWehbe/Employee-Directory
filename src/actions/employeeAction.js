@@ -7,11 +7,9 @@ import {
     UPDATE_EMPLOYEE_ERROR,
     DELETE_EMPLOYEE_SUCCESS,
     DELETE_EMPLOYEE_ERROR,
-    CLEAR_ADD_RESPONSE,
-    UPLOAD_EMPLOYEE_PICTURE_ERROR,
-    UPLOAD_EMPLOYEE_PICTURE_SUCCESS
+    CLEAR_ADD_RESPONSE
 } from "./actionTypes";
-import { getAllEmployees, createEmployee, deleteEmployee, updateEmployee, uploadPicture } from '../utils/EmployeeApi'
+import { getAllEmployees, createEmployee, deleteEmployee, updateEmployee } from '../utils/EmployeeApi'
 
 export const getEmployees = (page, q, filterByValue, filterByKey) => {
     return async (dispatch) => {
@@ -35,10 +33,10 @@ export const addEmployee = (emp) => {
     };
 };
 
-export const UpdateEmployee = (emp) => {
+export const UpdateEmployee = (emp, emp_id) => {
     return async (dispatch) => {
         try {
-            const result = await updateEmployee(emp);
+            const result = await updateEmployee(emp, emp_id);
             dispatch({ type: UPDATE_EMPLOYEE_SUCCESS, payload: result.data });
         } catch (error) {
             dispatch({ type: UPDATE_EMPLOYEE_ERROR, error });
@@ -53,17 +51,6 @@ export const DeleteEmployee = (empId) => {
             dispatch({ type: DELETE_EMPLOYEE_SUCCESS, payload: result.data });
         } catch (error) {
             dispatch({ type: DELETE_EMPLOYEE_ERROR, error });
-        }
-    };
-};
-
-export const UploadPicture = (empId, data) => {
-    return async (dispatch) => {
-        try {
-            const result = await uploadPicture(empId, data);
-            dispatch({ type: UPLOAD_EMPLOYEE_PICTURE_SUCCESS, payload: result.data });
-        } catch (error) {
-            dispatch({ type: UPLOAD_EMPLOYEE_PICTURE_ERROR, error });
         }
     };
 };

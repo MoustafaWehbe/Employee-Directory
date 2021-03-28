@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ClearAddResponse = exports.UploadPicture = exports.DeleteEmployee = exports.UpdateEmployee = exports.addEmployee = exports.getEmployees = void 0;
+exports.ClearAddResponse = exports.DeleteEmployee = exports.UpdateEmployee = exports.addEmployee = exports.getEmployees = void 0;
 
 var _actionTypes = require("./actionTypes");
 
@@ -87,7 +87,7 @@ var addEmployee = function addEmployee(emp) {
 
 exports.addEmployee = addEmployee;
 
-var UpdateEmployee = function UpdateEmployee(emp) {
+var UpdateEmployee = function UpdateEmployee(emp, emp_id) {
   return function _callee3(dispatch) {
     var result;
     return regeneratorRuntime.async(function _callee3$(_context3) {
@@ -96,7 +96,7 @@ var UpdateEmployee = function UpdateEmployee(emp) {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return regeneratorRuntime.awrap((0, _EmployeeApi.updateEmployee)(emp));
+            return regeneratorRuntime.awrap((0, _EmployeeApi.updateEmployee)(emp, emp_id));
 
           case 3:
             result = _context3.sent;
@@ -164,45 +164,6 @@ var DeleteEmployee = function DeleteEmployee(empId) {
 };
 
 exports.DeleteEmployee = DeleteEmployee;
-
-var UploadPicture = function UploadPicture(empId, data) {
-  return function _callee5(dispatch) {
-    var result;
-    return regeneratorRuntime.async(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            _context5.prev = 0;
-            _context5.next = 3;
-            return regeneratorRuntime.awrap((0, _EmployeeApi.uploadPicture)(empId, data));
-
-          case 3:
-            result = _context5.sent;
-            dispatch({
-              type: _actionTypes.UPLOAD_EMPLOYEE_PICTURE_SUCCESS,
-              payload: result.data
-            });
-            _context5.next = 10;
-            break;
-
-          case 7:
-            _context5.prev = 7;
-            _context5.t0 = _context5["catch"](0);
-            dispatch({
-              type: _actionTypes.UPLOAD_EMPLOYEE_PICTURE_ERROR,
-              error: _context5.t0
-            });
-
-          case 10:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, null, null, [[0, 7]]);
-  };
-};
-
-exports.UploadPicture = UploadPicture;
 
 var ClearAddResponse = function ClearAddResponse() {
   return function (dispatch) {

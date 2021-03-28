@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.uploadPicture = exports.getAllCountries = exports.getAllDepartments = exports.createEmployee = exports.updateEmployee = exports.deleteEmployee = exports.getAllEmployees = void 0;
+exports.getAllCountries = exports.getAllDepartments = exports.createEmployee = exports.updateEmployee = exports.deleteEmployee = exports.getAllEmployees = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -51,14 +51,14 @@ var deleteEmployee = function deleteEmployee(empId) {
 
 exports.deleteEmployee = deleteEmployee;
 
-var updateEmployee = function updateEmployee(emp) {
-  return _axios["default"].put("".concat(api, "/employee/").concat(emp._id), emp, config);
+var updateEmployee = function updateEmployee(emp, emp_id) {
+  return _axios["default"].put("".concat(api, "/employee/").concat(emp_id), emp, config2);
 };
 
 exports.updateEmployee = updateEmployee;
 
 var createEmployee = function createEmployee(emp) {
-  return _axios["default"].post("".concat(api, "/employee"), emp, config);
+  return _axios["default"].post("".concat(api, "/employee"), emp, config2);
 };
 
 exports.createEmployee = createEmployee;
@@ -74,9 +74,3 @@ var getAllCountries = function getAllCountries() {
 };
 
 exports.getAllCountries = getAllCountries;
-
-var uploadPicture = function uploadPicture(empId, data) {
-  return _axios["default"].post("".concat(api, "/employee/photo/").concat(empId), data, config2);
-};
-
-exports.uploadPicture = uploadPicture;

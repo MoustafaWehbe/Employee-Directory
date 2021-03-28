@@ -13,8 +13,7 @@ import {
     addEmployee,
     DeleteEmployee,
     UpdateEmployee,
-    ClearAddResponse,
-    UploadPicture
+    ClearAddResponse
 } from "../../actions/employeeAction";
 
 import DatePicker from "react-datepicker";
@@ -97,15 +96,10 @@ class EmployeeAddModal extends Component {
 
     async handleSubmit() {
         if (this.state.updateMode) {
-            await this.props.dispatch(UpdateEmployee(this.state.employee));
+            await this.props.dispatch(UpdateEmployee(this.getFormData(), this.state.employee._id));
         }
         else {
-            await this.props.dispatch(addEmployee(this.state.employee));
-        }
-        if (this.state.photo) {
-            const formData = new FormData();
-            formData.append('myfile', this.state.photo);
-            await this.props.dispatch(UploadPicture(this.state.employee._id, formData));
+            await this.props.dispatch(addEmployee(this.getFormData()));
         }
         if (this.props.addResponse && this.props.addResponse.error
             && this.props.addResponse.error.errors) {
@@ -114,6 +108,21 @@ class EmployeeAddModal extends Component {
         else {
             this.onAddModalCancel(true);
         }
+    }
+
+    getFormData() {
+        const formData = new FormData();
+        for (var prop in this.state.employee) {
+            if ((prop == 'department' || prop == 'country')
+                && this.state.employee[prop]._id)
+                formData.append(prop, this.state.employee[prop]._id);
+            else
+                formData.append(prop, this.state.employee[prop]);
+        }
+        if (this.state.photo) {
+            formData.append('myfile', this.state.photo);
+        }
+        return formData;
     }
 
     handleFormItemChange({ currentTarget: input }, name) {

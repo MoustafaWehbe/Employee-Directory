@@ -1,12 +1,18 @@
 "use strict";
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var properties = require('../config/properties');
 
 var multer = require('multer');
 
 var employeeModel = require('../models/employee.model');
 
-var perPage = 10;
+var perPage = 15;
 
 var getFindConditions = function getFindConditions(q, filterByKey, filterByValue) {
   var resCondition = {};
@@ -165,40 +171,32 @@ var deleteEmployeeById = function deleteEmployeeById(req, res, next) {
 };
 
 var addNewEmployee = function addNewEmployee(req, res, next) {
-  return employeeModel.create(req.body).then(function (emp) {
-    return res.json(emp);
-  })["catch"](function (err) {
-    return res.json({
-      message: 'error occured',
-      error: err
+  upload(req, res, function (err) {
+    employeeModel.create(_objectSpread({}, req.body, {
+      profileImageName: req.body.imageName,
+      profileImageData: req.file ? req.file.path : ''
+    })).then(function (emp) {
+      return res.json(emp);
+    })["catch"](function (err) {
+      return res.json({
+        message: 'error occured',
+        error: err
+      });
     });
   });
 };
 
 var updateEmployee = function updateEmployee(req, res, next) {
-  return employeeModel.updateOne({
-    _id: req.params['id']
-  }, {
-    $set: req.body
-  }).then(function (emp) {
-    return res.json(emp);
-  })["catch"](function (err) {
-    return res.json({
-      message: 'error occured',
-      error: err
-    });
-  });
-};
-
-var uploadPhoto = function uploadPhoto(req, res) {
   upload(req, res, function (err) {
-    return employeeModel.updateOne({
+    employeeModel.updateOne({
       _id: req.params['id']
     }, {
-      profileImageName: req.body.imageName,
-      profileImageData: req.file.path
-    }).then(function (res) {
-      return res.json(res);
+      $set: _objectSpread({}, req.body, {
+        profileImageName: req.body.imageName,
+        profileImageData: req.file ? req.file.path : req.body.profileImageData
+      })
+    }).then(function (emp) {
+      return res.json(emp);
     })["catch"](function (err) {
       return res.json({
         message: 'error occured',
@@ -213,6 +211,5 @@ module.exports = {
   findEmployeesById: findEmployeesById,
   deleteEmployeeById: deleteEmployeeById,
   addNewEmployee: addNewEmployee,
-  updateEmployee: updateEmployee,
-  uploadPhoto: uploadPhoto
+  updateEmployee: updateEmployee
 };

@@ -13,8 +13,6 @@ import Button from "react-bootstrap/Button";
 
 import './style.css';
 
-const perPage = 10;
-
 class Employees extends Component {
   state = {
     currentPage: 1,
@@ -130,8 +128,7 @@ class Employees extends Component {
 
   render() {
     const {
-      currentPage,
-      searchFilter,
+      currentPage
     } = this.state;
 
     const { employees } = this.props;
@@ -148,8 +145,7 @@ class Employees extends Component {
 
     // pagination
     let items = [];
-    debugger;
-    for (let i = 1; i <= Math.ceil(employees.total / perPage); i++) {
+    for (let i = 1; i <= Math.ceil(employees.total / employees.pagination.perPage); i++) {
       items.push(
         <Pagination.Item key={i} onClick={() => this.handlePaginationItemCLick(i)}
           active={i === currentPage}>
@@ -201,7 +197,7 @@ class Employees extends Component {
                 placeholder="Search..."
               />
               <p className="text-left text-muted">
-                {employees.total + ' ' }
+                {employees.total + ' '}
                  employees found.
                </p>
               {

@@ -2,7 +2,7 @@ const properties = require('../config/properties');
 var multer = require('multer')
 
 const employeeModel = require('../models/employee.model')
-const perPage = 10;
+const perPage = 15;
 
 const getFindConditions = (q, filterByKey, filterByValue) => {
     let resCondition = {};
@@ -116,21 +116,26 @@ const deleteEmployeeById = (req, res, next) =>
         .then(emp => res.json(emp))
         .catch(err => res.json({ message: 'error occured', error: err }));
 
-const addNewEmployee = (req, res, next) => employeeModel.create(req.body)
-    .then(emp => res.json(emp))
-    .catch(err => res.json({ message: 'error occured', error: err }));
-
-const updateEmployee = (req, res, next) => employeeModel.updateOne({ _id: req.params['id'] }, { $set: req.body })
-    .then(emp => res.json(emp))
-    .catch(err => res.json({ message: 'error occured', error: err }));
-
-const uploadPhoto = (req, res) => {
+const addNewEmployee = (req, res, next) => {
     upload(req, res, (err) => {
-        return employeeModel.updateOne({ _id: req.params['id'] }, {
-            profileImageName: req.body.imageName,
-            profileImageData: req.file.path
+        employeeModel.create({
+            ...req.body, profileImageName: req.body.imageName,
+            profileImageData: req.file ? req.file.path : ''
         })
-            .then(res => res.json(res))
+            .then(emp => res.json(emp))
+            .catch(err => res.json({ message: 'error occured', error: err }));
+    });
+}
+
+const updateEmployee = (req, res, next) => {
+    upload(req, res, (err) => {
+        employeeModel.updateOne({ _id: req.params['id'] }, {
+            $set: {
+                ...req.body, profileImageName: req.body.imageName,
+                profileImageData: req.file ? req.file.path : req.body.profileImageData
+            }
+        })
+            .then(emp => res.json(emp))
             .catch(err => res.json({ message: 'error occured', error: err }));
     });
 }
@@ -140,6 +145,5 @@ module.exports = {
     findEmployeesById,
     deleteEmployeeById,
     addNewEmployee,
-    updateEmployee,
-    uploadPhoto
+    updateEmployee
 }

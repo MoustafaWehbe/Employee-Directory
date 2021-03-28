@@ -7,9 +7,14 @@
     justify-items: center;
   }
   
+  .employees-grid img {
+    object-fit:cover;
+    height: 100px;
+  }
+
   @media only screen and (max-width: 1400px) {
     .employees-grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
   }
   
