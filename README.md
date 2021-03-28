@@ -5,7 +5,7 @@
     - user can click on any employee, and then a form will open with all the employee details. The use can also delete and edit the employee.
     - when on home page the user can click on create to create a new employee.
 
-**frontend:**
+**Frontend:**
 
     - setup: 
         npm install
@@ -13,7 +13,7 @@
         npm start
     - go to http://localhost:3000/employees
 
-**backend:**
+**Backend:**
 
     - setup: 
         npm install
@@ -21,7 +21,7 @@
         npm start
     - apis found at localhost:4000/api/v1/, for example to get all employees: localhost:4000/api/v1/employee?page=1
 
-**database:**
+**Database:**
 
     - data seed: 
         cd /backend
@@ -31,9 +31,10 @@
     - connection string to DB is under:
         /backend/config/properties
 
-**tools and libs:**
+**Tools and libs:**
 
     - React for the front end 
+    - Bootsrap-react lib is used for styling and responsivness
     - Nodejs/express for back end
     - mongdb as the database
     - mongoose for facilitation mongodb relations and data modeling
