@@ -14,6 +14,8 @@ backend:
 
 Requires connection to the internet to load the randomly generated url images from faker.
 
+Static files like images are served by the node server in the ./public directory.
+
 User Guide:
     - user can search by first name, last name or email for an employee.
     - user can filter the employees list by department or country

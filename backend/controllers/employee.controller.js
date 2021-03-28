@@ -1,3 +1,4 @@
+const properties = require('../config/properties');
 var multer = require('multer')
 
 const employeeModel = require('../models/employee.model')
@@ -57,7 +58,7 @@ const findAllEmployees = (req, res, next) => {
         .limit(perPage)
         .skip(perPage * (page - 1))
         .sort({
-            firstName: 'asc'
+            firstName: 'desc'
         })
         .then(async (employees) => {
             employeeModel.countDocuments(getFindConditions(q, filterByKey, filterByValue))
@@ -80,7 +81,7 @@ const findAllEmployees = (req, res, next) => {
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../uploads/')
+        cb(null, properties.DIR);
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + file.originalname);
@@ -88,10 +89,10 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
         cb(null, true);
     } else {
-        cb(null, true);
+        cb(null, false);
     }
 }
 
@@ -101,7 +102,7 @@ const upload = multer({
         fileSize: 1024 * 1024 * 5
     },
     fileFilter: fileFilter
-})
+}).single("myfile");
 
 
 const findEmployeesById = (req, res, next) => {
@@ -124,7 +125,7 @@ const updateEmployee = (req, res, next) => employeeModel.updateOne({ _id: req.pa
     .catch(err => res.json({ message: 'error occured', error: err }));
 
 const uploadPhoto = (req, res) => {
-    upload.single('fdsf')(req, res, () => {
+    upload(req, res, (err) => {
         return employeeModel.updateOne({ _id: req.params['id'] }, {
             profileImageName: req.body.imageName,
             profileImageData: req.file.path

@@ -148,7 +148,8 @@ class Employees extends Component {
 
     // pagination
     let items = [];
-    for (let i = 1; i <= employees.total / perPage; i++) {
+    debugger;
+    for (let i = 1; i <= Math.ceil(employees.total / perPage); i++) {
       items.push(
         <Pagination.Item key={i} onClick={() => this.handlePaginationItemCLick(i)}
           active={i === currentPage}>
@@ -167,8 +168,8 @@ class Employees extends Component {
       <div className="background-container">
         <div className="mx-5 py-5">
           <div className="row">
-            <div className="offset-10 col-lg-2 col-sm-12">
-              <Button variant="primary"
+            <div className="offset-10 col-lg-2 col-sm-12 margin-bottom-10">
+              <Button variant="primary" 
                 onClick={() => this.onEmployeeAddClick()}>Add Employee</Button>{' '}
             </div>
           </div>

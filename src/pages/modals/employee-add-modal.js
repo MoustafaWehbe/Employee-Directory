@@ -103,7 +103,9 @@ class EmployeeAddModal extends Component {
             await this.props.dispatch(addEmployee(this.state.employee));
         }
         if (this.state.photo) {
-            await this.props.dispatch(UploadPicture(this.state.employee._id, this.state.photo));
+            const formData = new FormData();
+            formData.append('myfile', this.state.photo);
+            await this.props.dispatch(UploadPicture(this.state.employee._id, formData));
         }
         if (this.props.addResponse && this.props.addResponse.error
             && this.props.addResponse.error.errors) {
@@ -127,7 +129,6 @@ class EmployeeAddModal extends Component {
     }
 
     handleFileChange(e) {
-        console.log(e.target.files[0])
         this.setState({ photo: e.target.files[0] })
     }
 
@@ -237,7 +238,7 @@ class EmployeeAddModal extends Component {
                         {counItemsDropDown}
                     </Dropdown>
                     <Form.Group>
-                        <Form.File onChange={event => this.handleFileChange(event)} id="profile-pic" label="Choose an image" />
+                        <Form.File name="test" onChange={event => this.handleFileChange(event)} id="profile-pic" label="Choose an image" />
                     </Form.Group>
                     {validations}
                 </Modal.Body>

@@ -27,3 +27,7 @@ body {
   font-weight: bold;
   color: green!important;
 }
+
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}

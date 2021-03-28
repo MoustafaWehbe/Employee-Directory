@@ -1,5 +1,7 @@
 "use strict";
 
+var properties = require('../config/properties');
+
 var multer = require('multer');
 
 var employeeModel = require('../models/employee.model');
@@ -79,7 +81,7 @@ var findAllEmployees = function findAllEmployees(req, res, next) {
   var filterByKey = req.query.filterByKey;
   var filterByValue = req.query.filterByValue;
   employeeModel.find(getFindConditions(q, filterByKey, filterByValue)).populate('department').populate('country').limit(perPage).skip(perPage * (page - 1)).sort({
-    firstName: 'asc'
+    firstName: 'desc'
   }).then(function _callee(employees) {
     return regeneratorRuntime.async(function _callee$(_context) {
       while (1) {
@@ -115,7 +117,7 @@ var findAllEmployees = function findAllEmployees(req, res, next) {
 
 var storage = multer.diskStorage({
   destination: function destination(req, file, cb) {
-    cb(null, '../uploads/');
+    cb(null, properties.DIR);
   },
   filename: function filename(req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -123,10 +125,10 @@ var storage = multer.diskStorage({
 });
 
 var fileFilter = function fileFilter(req, file, cb) {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
     cb(null, true);
   } else {
-    cb(null, true);
+    cb(null, false);
   }
 };
 
@@ -136,7 +138,7 @@ var upload = multer({
     fileSize: 1024 * 1024 * 5
   },
   fileFilter: fileFilter
-});
+}).single("myfile");
 
 var findEmployeesById = function findEmployeesById(req, res, next) {
   employeeModel.findById(req.params['id']).then(function (emp) {
@@ -189,7 +191,7 @@ var updateEmployee = function updateEmployee(req, res, next) {
 };
 
 var uploadPhoto = function uploadPhoto(req, res) {
-  upload.single('fdsf')(req, res, function () {
+  upload(req, res, function (err) {
     return employeeModel.updateOne({
       _id: req.params['id']
     }, {

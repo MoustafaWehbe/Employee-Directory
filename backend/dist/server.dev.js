@@ -22,7 +22,7 @@ var app = express(); //configure bodyparser
 
 var bodyParserJSON = bodyParser.json();
 var bodyParserURLEncoded = bodyParser.urlencoded({
-  extended: true
+  extended: false
 }); //initialise express router
 
 var router = express.Router(); // app.use(cors());
@@ -52,8 +52,9 @@ app.use(function (req, res, next) {
 // app.use('/users', usersRouter);
 // use express router
 
+app.use(cors());
 app.use('/api/v1', router);
-app.use('uploads', express["static"]('uploads')); //call heros routing
+app.use('/public', express["static"]('./public')); //call heros routing
 
 emplyeesRoutes(router);
 countriesRoutes(router);
