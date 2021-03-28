@@ -169,7 +169,7 @@ class Employees extends Component {
         <div className="mx-5 py-5">
           <div className="row">
             <div className="offset-10 col-lg-2 col-sm-12 margin-bottom-10">
-              <Button variant="primary" 
+              <Button variant="primary"
                 onClick={() => this.onEmployeeAddClick()}>Add Employee</Button>{' '}
             </div>
           </div>
@@ -201,7 +201,7 @@ class Employees extends Component {
                 placeholder="Search..."
               />
               <p className="text-left text-muted">
-                {!!filteredEmployees.length ? `${filteredEmployees.length} ` : "0"}
+                {employees.total + ' ' }
                  employees found.
                </p>
               {
