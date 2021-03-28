@@ -41,7 +41,6 @@ class CountrySelectModal extends Component {
     }
 
     render() {
-        // const propss = this.props;
         const { countries, dispatch } = this.props;
         if (_.isEmpty(countries)) {
             return (

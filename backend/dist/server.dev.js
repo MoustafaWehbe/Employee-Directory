@@ -25,9 +25,7 @@ var bodyParserURLEncoded = bodyParser.urlencoded({
   extended: false
 }); //initialise express router
 
-var router = express.Router(); // app.use(cors());
-// app.use(express.json());
-
+var router = express.Router();
 app.use(bodyParser.json({
   limit: '5mb'
 }));
@@ -46,12 +44,7 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
   res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Origin,Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization");
   next();
-}); // const exercisesRouter = require('./routes/exercises');
-// const usersRouter = require('./routes/users');
-// app.use('/exercises', exercisesRouter);
-// app.use('/users', usersRouter);
-// use express router
-
+});
 app.use(cors());
 app.use('/api/v1', router);
 app.use('/public', express["static"]('./public')); //call heros routing

@@ -18,8 +18,6 @@ var bodyParserURLEncoded = bodyParser.urlencoded({ extended: false });
 //initialise express router
 var router = express.Router();
 
-// app.use(cors());
-// app.use(express.json());
 app.use(bodyParser.json({limit:'5mb'})); 
 app.use(bodyParser.urlencoded({extended:true, limit:'5mb'}));
 
@@ -38,13 +36,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-// const exercisesRouter = require('./routes/exercises');
-// const usersRouter = require('./routes/users');
-
-// app.use('/exercises', exercisesRouter);
-// app.use('/users', usersRouter);
-
-// use express router
 app.use(cors());
 
 app.use('/api/v1', router);

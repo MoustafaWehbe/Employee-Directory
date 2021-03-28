@@ -41,7 +41,6 @@ class DepartmentSelectModal extends Component {
     }
 
     render() {
-        // const propss = this.props;
         const { departments, dispatch } = this.props;
         if (_.isEmpty(departments)) {
             return (
@@ -91,12 +90,5 @@ const mapStateToProps = (state) => {
         departments: state.department.departments,
     };
 };
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         getDepartments: () =>
-//             dispatch(getDepartments()),
-//     };
-// };
 
 export default connect(mapStateToProps)(DepartmentSelectModal);

@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 
 import Employees from "./pages/employees";
-// import AddEmployeeForm from "./pages/AddEmployee";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
