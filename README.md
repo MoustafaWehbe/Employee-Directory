@@ -46,3 +46,4 @@
 
     - Requires connection to the internet to load the randomly generated url images from faker.
     - Static files like images are served by the node server in the ./public directory.
+    - Added postman collection with the available apis.(Postlight-Code-Challenge.postman_collection.json)

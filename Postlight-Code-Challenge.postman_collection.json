@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "fbcae5ab-2921-4f60-9ad0-ec32b1168e02",
+		"name": "Postlight-Code-Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "employee-all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/api/v1/employee?page=0&q=we&filterByKey=country&filterByValue=605a6f1e39c1a291714dab37",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"employee"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "q",
+							"value": "we"
+						},
+						{
+							"key": "filterByKey",
+							"value": "country"
+						},
+						{
+							"key": "filterByValue",
+							"value": "605a6f1e39c1a291714dab37"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "employee-by-id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/api/v1/employee/605a5c4693bcfc8a4be6909b",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"605a5c4693bcfc8a4be6909b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "employee-create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"moustafa\",\n    \"lastName\": \"wehbe\",\n    \"email\": \"moustafa.a.wehbe@hotmail.com\",\n    \"website\": \"moustafa.com\",\n    \"phone\": \"76518269\",\n    \"address\": \"Beirut-Bliss\",\n    \"department\": \"605a6f1e39c1a291714dab3c\",\n    \"country\": \"605a6f1e39c1a291714dab38\",\n    \"imgUrl\": \"dfsfdsffdsfsdfsdf\",\n    \"birthDate\": \"Tue Mar 23 2021 23:22:44 GMT+0200 (Eastern European Standard Time)\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/api/v1/employee",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "departments-all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/api/v1/department",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"department"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "coutries-all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/api/v1/country",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"country"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
