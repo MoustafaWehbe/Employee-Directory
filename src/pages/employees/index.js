@@ -65,7 +65,7 @@ class Employees extends Component {
   }
 
   handleclearFiltersClick() {
-    this.setState({ filterByKey: '', filterByValue: null },
+    this.setState({ filterByKey: '', currentPage: 1, filterByValue: null, filterByName: '' },
       () => { this.reloadEmployees(1) });
   }
 
@@ -79,21 +79,23 @@ class Employees extends Component {
   };
 
   reloadEmployees(page = 1) {
-    this.props.getEmployees(page, this.state.searchFilter, this.state.filterByValue, this.state.filterByKey);
+    setTimeout(() => {
+      this.props.getEmployees(page, this.state.searchFilter, this.state.filterByValue, this.state.filterByKey);
+    });
   }
 
-  onDepSelected(id) {
-    if (id) {
-      this.setState({ filterByKey: 'department', filterByValue: id }, () => {
+  onDepSelected(obj) {
+    if (obj && obj.depId) {
+      this.setState({ filterByKey: 'department', filterByValue: obj.depId, filterByName: obj.depName }, () => {
         this.reloadEmployees()
       });
       this.setState({ showDepartmentModal: false });
     }
   }
 
-  onCounSelected(id) {
-    if (id) {
-      this.setState({ filterByKey: 'country', filterByValue: id }, () => {
+  onCounSelected(obj) {
+    if (obj) {
+      this.setState({ filterByKey: 'country', filterByValue: obj.counId, filterByName: obj.counName }, () => {
         this.reloadEmployees()
       });
       this.setState({ showCountryModal: false });
@@ -113,7 +115,10 @@ class Employees extends Component {
   }
 
   onAddModalCancel(shouldReload = false) {
-    this.setState({ showEmployeeAddModal: false, employee: null }, () => {
+    this.setState({
+      showEmployeeAddModal: false, currentPage: shouldReload ? 1 : this.state.currentPage,
+      employee: null
+    }, () => {
       shouldReload ? this.reloadEmployees() : void 0;
     });
   }
@@ -203,7 +208,7 @@ class Employees extends Component {
               {
                 this.state.filterByKey && this.state.filterByValue ?
                   (<p className="text-left text-muted green-bold">
-                    {this.state.filterByKey + ' filter is applied on Employees list'}
+                    {'Employees list is filtered by ' + this.state.filterByKey + ' = ' + this.state.filterByName}
                   </p>)
                   : null
               }
@@ -230,13 +235,13 @@ class Employees extends Component {
           {this.state['showDepartmentModal'] ?
             <DepartmentSelectModal
               onDepModalCancel={() => this.onDepModalCancel()}
-              onDepSelected={(id) => this.onDepSelected(id)} /> : null}
+              onDepSelected={(obj) => this.onDepSelected(obj)} /> : null}
         </div>
         <div>
           {this.state['showCountryModal'] ?
             <CountrySelectModal
               onCounModalCancel={() => this.onCounModalCancel()}
-              onCounSelected={(id) => this.onCounSelected(id)} /> : null}
+              onCounSelected={(obj) => this.onCounSelected(obj)} /> : null}
         </div>
         <div>
           {this.state['showEmployeeAddModal'] ?

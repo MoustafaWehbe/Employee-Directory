@@ -18,7 +18,7 @@ const getRandomData = () => {
         api.website = faker.internet.url();
         api.phone = faker.phone.phoneNumber();
         api.address = faker.address.streetAddress();
-        api.profileImageData = faker.image.imageUrl();
+        api.profileImageData = faker.random.image();
         api.department = getRandomItem(departmentData.map(el => el._id));
         api.country = getRandomItem(countryData.map(el => el._id));
         api.birthDate = faker.date.past();

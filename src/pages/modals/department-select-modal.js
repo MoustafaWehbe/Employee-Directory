@@ -37,7 +37,7 @@ class DepartmentSelectModal extends Component {
     }
 
     onDepSelect() {
-        this.props.onDepSelected(this.state['selectedDepId']);
+        this.props.onDepSelected({depId: this.state['selectedDepId'], depName: this.state.selectedDepName});
     }
 
     render() {

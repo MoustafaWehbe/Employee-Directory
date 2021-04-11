@@ -37,7 +37,7 @@ class CountrySelectModal extends Component {
     }
 
     onCounSelect() {
-        this.props.onCounSelected(this.state['selectedCounId']);
+        this.props.onCounSelected({ counId: this.state['selectedCounId'], counName: this.state.selectedCounName });
     }
 
     render() {
